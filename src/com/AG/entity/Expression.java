@@ -9,18 +9,29 @@ public class Expression {
 	// 操作符列表
 	private List<String> operatorList;
 	// 运算结果
-	private Map<Integer, Integer> result;
+	private String result;
+	// 括号类型
+	private int bracketType;
 
 	public Expression() {
 		super();
 	}
 
-	public Expression(List<Map<Integer, Integer>> parameterList, List<String> operatorList,
-			Map<Integer, Integer> result) {
+	public Expression(List<Map<Integer, Integer>> parameterList, List<String> operatorList, String result,
+			int bracketType) {
 		super();
 		this.parameterList = parameterList;
 		this.operatorList = operatorList;
 		this.result = result;
+		this.bracketType = bracketType;
+	}
+
+	public int getBracketType() {
+		return bracketType;
+	}
+
+	public void setBracketType(int bracketType) {
+		this.bracketType = bracketType;
 	}
 
 	public List<Map<Integer, Integer>> getParameterList() {
@@ -39,11 +50,11 @@ public class Expression {
 		this.operatorList = operatorList;
 	}
 
-	public Map<Integer, Integer> getResult() {
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(Map<Integer, Integer> result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
 

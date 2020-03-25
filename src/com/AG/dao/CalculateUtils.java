@@ -23,7 +23,7 @@ public class CalculateUtils {
 	 * @param denominator 分母
 	 * @return 最大公约数
 	 */
-	private Integer gcd(Integer numerator, Integer denominator) {
+	public Integer gcd(Integer numerator, Integer denominator) {
 		int temp;
 		while (denominator > 0) {
 			temp = numerator % denominator;
@@ -46,7 +46,7 @@ public class CalculateUtils {
 			if (expressArr[i].matches("[0-9]+/[0-9]+")) {
 				stack.push(expressArr[i]);
 				// + - * / 运算符的处理
-			} else if (expressArr[i].matches("[\\+\\-\\*\\/]")) {
+			} else if (expressArr[i].matches("[\\+\\-\\*\\÷]")) {
 				String k1 = stack.pop();
 				String k2 = stack.pop();
 				// 计算结果
@@ -74,7 +74,7 @@ public class CalculateUtils {
 			return subtraction(k1, k2);
 		case "*":
 			return multiplication(k1, k2);
-		case "/":
+		case "÷":
 			return division(k1, k2);
 		default:
 			throw new RuntimeException("没有该类型的运算符！");
@@ -89,6 +89,9 @@ public class CalculateUtils {
 	 * @return String类型的结果
 	 */
 	private String addition(String k1, String k2) {
+		if (k1.contains("/0") || k1.contains("-") || k2.contains("/0") || k2.contains("-")) {
+			return "-1/1";
+		}
 		// 将字符串转为数组
 		String[] parameter1 = k1.split("/");
 		String[] parameter2 = k2.split("/");
@@ -115,6 +118,9 @@ public class CalculateUtils {
 	 * @return String类型的结果
 	 */
 	private String subtraction(String k1, String k2) {
+		if (k1.contains("/0") || k1.contains("-") || k2.contains("/0") || k2.contains("-")) {
+			return "-1/1";
+		}
 		// 将字符串转为数组
 		String[] parameter1 = k1.split("/");
 		String[] parameter2 = k2.split("/");
@@ -130,7 +136,11 @@ public class CalculateUtils {
 		parameterArrTemp[1] = Integer.parseInt(parameter2[1]) * Integer.parseInt(parameter1[1]);
 		parameterArrTemp[2] = gcd(parameterArrTemp[0], parameterArrTemp[1]);
 		// 返回结果
-		return parameterArrTemp[0] + "/" + parameterArrTemp[1];
+		if (parameterArrTemp[0] < 0) {
+			return "-1/1";
+		} else {
+			return parameterArrTemp[0] + "/" + parameterArrTemp[1];
+		}
 	}
 
 	/**
@@ -141,6 +151,9 @@ public class CalculateUtils {
 	 * @return String类型的结果
 	 */
 	private String multiplication(String k1, String k2) {
+		if (k1.contains("/0") || k1.contains("-") || k2.contains("/0") || k2.contains("-")) {
+			return "-1/1";
+		}
 		// 将字符串转为数组
 		String[] parameter1 = k1.split("/");
 		String[] parameter2 = k2.split("/");
@@ -162,6 +175,9 @@ public class CalculateUtils {
 	 * @return String类型的结果
 	 */
 	private String division(String k1, String k2) {
+		if (k1.contains("/0") || k1.contains("-") || k2.contains("/0") || k2.contains("-")) {
+			return "-1/1";
+		}
 		// 将字符串转为数组
 		String[] parameter1 = k1.split("/");
 		String[] parameter2 = k2.split("/");
@@ -172,7 +188,11 @@ public class CalculateUtils {
 		parameterArrTemp[1] = Integer.parseInt(parameter1[1]) * Integer.parseInt(parameter2[0]);
 		parameterArrTemp[2] = gcd(parameterArrTemp[0], parameterArrTemp[1]);
 		// 返回结果
-		return parameterArrTemp[1] / parameterArrTemp[2] + "/" + parameterArrTemp[0] / parameterArrTemp[2];
+		if (parameterArrTemp[1] > (parameterArrTemp[0])) {
+			return "-1/1";
+		} else {
+			return parameterArrTemp[1] / parameterArrTemp[2] + "/" + parameterArrTemp[0] / parameterArrTemp[2];
+		}
 	}
 
 	/**
@@ -181,14 +201,14 @@ public class CalculateUtils {
 	 * @param express
 	 * @return
 	 */
-	private String transfer(String express) {
+	public String transfer(String express) {
 		Stack<String> stack = new Stack<>();
 		List<String> list = new ArrayList<>();
 		String[] expressArr = express.split(" ");
 		for (int i = 0; i < expressArr.length; i++) {
 			if (expressArr[i].matches("[0-9]+/[0-9]+")) {
 				list.add(expressArr[i]);
-			} else if (expressArr[i].matches("[\\+\\-\\*\\/]")) {
+			} else if (expressArr[i].matches("[\\+\\-\\*\\÷]")) {
 				// 如果stack为空
 				if (stack.isEmpty()) {
 					stack.push(expressArr[i]);
@@ -251,7 +271,7 @@ public class CalculateUtils {
 			return 1;
 		case "*":
 			return 2;
-		case "/":
+		case "÷":
 			return 2;
 		default:
 			throw new RuntimeException("没有该类型的运算符！");
