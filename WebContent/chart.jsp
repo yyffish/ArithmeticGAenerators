@@ -286,6 +286,8 @@
 								<div class="au-card m-b-30">
 									<div class="au-card-inner">
 										<h3 class="title-2 m-b-40">答案分析</h3>
+										<h3 class="title-2 m-b-40">正确：${rightList}</h3>
+										<h3 class="title-2 m-b-40">错误：${mistakeList}</h3>
 										<canvas id="doughutChart1"></canvas>
 									</div>
 								</div>

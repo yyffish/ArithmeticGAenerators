@@ -1,6 +1,7 @@
 package com.AG.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,19 +41,23 @@ public class checkServlet extends HttpServlet {
 		String answersFilePath = "C:/Users/Fish/Desktop/Answers.txt";
 		List<String> exercises = fileUtils.readTxtFile(exercisesFilePath);
 		List<String> answers = fileUtils.readTxtFile(answersFilePath);
+		List<Integer> rightList = new ArrayList<Integer>();
+		List<Integer> mistakeList = new ArrayList<Integer>();
 		int right = 0;
 		int mistake = 0;
 		for (int i = 0; i < exercises.size(); i++) {
 			if (answers.get(i).equals(calculateService.calcluate(exercises.get(i)))) {
 				right++;
+				rightList.add(i);
 			} else {
 				mistake++;
+				mistakeList.add(i);
 			}
 		}
-		System.out.println("right:" + right);
-		System.out.println("mistake:" + mistake);
 		request.setAttribute("right", right);
 		request.setAttribute("mistake", mistake);
+		request.setAttribute("rightList", rightList);
+		request.setAttribute("mistakeList", mistakeList);
 		request.getRequestDispatcher("/chart.jsp").forward(request, response);
 	}
 

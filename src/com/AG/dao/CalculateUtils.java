@@ -201,7 +201,7 @@ public class CalculateUtils {
 	 * @param express
 	 * @return
 	 */
-	public String transfer(String express) {
+	private String transfer(String express) {
 		Stack<String> stack = new Stack<>();
 		List<String> list = new ArrayList<>();
 		String[] expressArr = express.split(" ");

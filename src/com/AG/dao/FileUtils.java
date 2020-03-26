@@ -57,6 +57,13 @@ public class FileUtils {
 		return list;
 	}
 
+	/**
+	 * 读txt文件
+	 * 
+	 * @param list
+	 * @param filePath
+	 * @return
+	 */
 	public boolean writeTxtFile(List<String> list, String filePath) {
 		boolean flag = false;
 		File file = new File(filePath);
@@ -72,6 +79,7 @@ public class FileUtils {
 			bufferedWriter.close();
 		} catch (IOException e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		flag = true;
 		return flag;
