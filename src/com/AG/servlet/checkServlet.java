@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.AG.dao.FileUtils;
 import com.AG.service.CalculateService;
+import com.AG.service.FileService;
 
 /**
  * Servlet implementation class checkServlet
@@ -35,27 +35,27 @@ public class checkServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		FileUtils fileUtils = new FileUtils();
+		FileService fileService = new FileService();
 		CalculateService calculateService = new CalculateService();
 		String exercisesFilePath = "C:/Users/Fish/Desktop/Exercises.txt";
 		String answersFilePath = "C:/Users/Fish/Desktop/Answers.txt";
-		List<String> exercises = fileUtils.readTxtFile(exercisesFilePath);
-		List<String> answers = fileUtils.readTxtFile(answersFilePath);
+		List<String> exercises = fileService.readTxtFile(exercisesFilePath);
+		List<String> answers = fileService.readTxtFile(answersFilePath);
 		List<Integer> rightList = new ArrayList<Integer>();
 		List<Integer> mistakeList = new ArrayList<Integer>();
-		int right = 0;
-		int mistake = 0;
 		for (int i = 0; i < exercises.size(); i++) {
-			if (answers.get(i).equals(calculateService.calcluate(exercises.get(i)))) {
-				right++;
+			System.out.println(calculateService.calcluate(exercises.get(i)));
+			System.out.println("answers.get(i)" + answers.get(i));
+			if (calculateService.calcluate(exercises.get(i)).equals(answers.get(i))) {
 				rightList.add(i);
+				// System.out.println("r:" + i);
 			} else {
-				mistake++;
 				mistakeList.add(i);
+				// System.out.println("w:" + i);
 			}
 		}
-		request.setAttribute("right", right);
-		request.setAttribute("mistake", mistake);
+		request.setAttribute("right", rightList.size());
+		request.setAttribute("mistake", mistakeList.size());
 		request.setAttribute("rightList", rightList);
 		request.setAttribute("mistakeList", mistakeList);
 		request.getRequestDispatcher("/chart.jsp").forward(request, response);

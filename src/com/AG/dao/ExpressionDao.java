@@ -97,6 +97,7 @@ public class ExpressionDao {
 		int a = random.nextInt(max - 1) + 1;
 		parameterMap.put(0, a);
 		parameterMap.put(1, 1);
+		// System.out.println(parameterMap.get(0) + "/" + parameterMap.get(1));
 		return parameterMap;
 	}
 
@@ -108,13 +109,14 @@ public class ExpressionDao {
 	 */
 	private Map<Integer, Integer> getFractionParameters(Integer max) {
 		Map<Integer, Integer> parameterMap = new HashMap<>();
-		Integer denominator = random.nextInt(max - 1) + 1;
-		Integer numerator = random.nextInt(denominator * max - 1) + 1;
+		Integer denominator = random.nextInt(max - 2) + 2;
+		Integer numerator = random.nextInt(max - 1) + 1;
 		Integer gcd = calculateUtils.gcd(numerator, denominator);
 		numerator /= gcd;
 		denominator /= gcd;
 		parameterMap.put(0, numerator);
 		parameterMap.put(1, denominator);
+		// System.out.println(parameterMap.get(0) + "/" + parameterMap.get(1));
 		return parameterMap;
 	}
 

@@ -19,7 +19,7 @@ public class ExpressionService {
 	 * @return 题目列表
 	 */
 	public List<String> getExamList(int max, int examNum) {
-		List<String> examList = new ArrayList<String>();
+		List<Expression> examList = new ArrayList<>();
 		for (int i = 0; i < examNum; i++) {
 			// 新建Expression对象
 			Expression expression = new Expression();
@@ -31,6 +31,10 @@ public class ExpressionService {
 			expression.setOperatorList(expressionDao.getOperatorList(operatorNum));
 			// 设置括号类型
 			expression.setBracketType(expressionDao.getBracketType(operatorNum));
+			// 判重
+			if (expressionDao.isExistList(examList, expression)) {
+				continue;
+			}
 			// Expression对象转为String
 			String express = expressionDao.expressionToString(expression);
 			// 通过String计算结果判断是否符合要求
@@ -40,9 +44,14 @@ public class ExpressionService {
 				continue;
 			}
 			// 添加到List中
-			examList.add(express);
+			examList.add(expression);
 		}
-		return examList;
+		// 讲包装expression的List转为包装String的List
+		List<String> examStringList = new ArrayList<>();
+		for (int i = 0; i < examList.size(); i++) {
+			examStringList.add(expressionDao.expressionToString(examList.get(i)));
+		}
+		return examStringList;
 	}
 
 	/**
